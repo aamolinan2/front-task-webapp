@@ -1,59 +1,67 @@
-# AppDataform
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
+# Front Task WebApp
 
-## Development server
+Este proyecto es una aplicación de gestión de tareas construida con **Angular 17** utilizando configuración **standalone**, Firebase Hosting para el despliegue y buenas prácticas modernas como arquitectura limpia, lazy loading y protección de rutas.
 
-To start a local development server, run:
+## 📐 Arquitectura y Organización
 
-```bash
-ng serve
+El proyecto sigue la estructura modular de Angular standalone:
+
+```
+src/
+├── app/
+│   ├── config/             # Configuración de rutas y guards
+│   ├── features/
+│   │   ├── auth/           # Módulos y componentes de autenticación
+│   │   └── tasks/          # Gestión de tareas (CRUD)
+│   ├── core/               # Servicios compartidos
+├── environments/           # Configuración de entornos
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Componentes principales:
+- **LoginComponent**: formulario de autenticación con validación y uso de `sessionStorage`.
+- **TasksComponent**: interfaz para crear, listar y marcar tareas como completadas.
+- **CreateUserDialogComponent**: modal para registrar nuevos usuarios.
 
-## Code scaffolding
+## 🔐 Autenticación y Seguridad
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Autenticación basada en email usando `sessionStorage`.
+- `AuthGuard` protege rutas como `/tasks`.
+- Al cerrar pestaña, el token se borra automáticamente.
+- Previene navegación manual mediante botones de historial del navegador.
 
-```bash
-ng generate component component-name
-```
+## 🧩 Dependencias destacadas
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- `@angular/material`: interfaz moderna y accesible.
+- `ngx-mask`: control de inputs.
+- `rxjs`: gestión reactiva de eventos y servicios.
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🚀 Scripts importantes
 
 ```bash
-ng test
+npm install       # Instala dependencias
+npm run start     # Levanta servidor local
+npm run build     # Compila para producción
 ```
 
-## Running end-to-end tests
+## 🔥 Despliegue en Firebase
 
-For end-to-end (e2e) testing, run:
+- Automatizado con CI/CD vía GitHub Actions.
+- El directorio de salida `dist/front-task-webapp/browser` se publica.
+
+## 🧪 Buenas prácticas aplicadas
+
+- Uso de `ReactiveFormsModule` y `NgModel` para formularios.
+- Validaciones y mensajes amigables.
+- Lazy loading en rutas para optimización.
+- Rutas protegidas con `canActivate`.
+- Uso de `NotificationService` para mensajes globales.
+
+## 📁 Producción vs Desarrollo
+
+- Variables como `apiUrl` están configuradas para cambiar dinámicamente entre entornos.
+- Para correr con entorno producción:
 
 ```bash
-ng e2e
+ng serve --configuration=production
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
