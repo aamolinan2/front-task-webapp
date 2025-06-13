@@ -1,0 +1,12 @@
+<div class="modal-overlay">
+  <div class="modal-container">
+    <h2>Crear nueva cuenta</h2>
+
+    <input type="email" [(ngModel)]="email" placeholder="Correo electrónico" class="input" />
+
+    <div class="actions">
+      <button class="btn primary" (click)="createUser()">Crear</button>
+      <button class="btn secondary" (click)="close.emit()">Cancelar</button>
+    </div>
+  </div>
+</div>

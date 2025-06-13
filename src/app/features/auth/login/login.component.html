@@ -1,0 +1,25 @@
+<div class="login-container">
+  <h2>Iniciar sesión</h2>
+  <form (ngSubmit)="login()">
+    <input
+      type="email"
+      placeholder="Correo electrónico"
+      [(ngModel)]="email"
+      name="email"
+      required
+    />
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div class="create-account">
+    ¿No tienes cuenta?
+    <a (click)="showCreateUser = true">Crear nueva cuenta</a>
+  </div>
+
+</div>
+
+<app-create-user-dialog
+  *ngIf="showCreateUser"
+  (close)="showCreateUser = false"
+></app-create-user-dialog>
+
