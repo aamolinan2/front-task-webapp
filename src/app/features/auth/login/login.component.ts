@@ -8,6 +8,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateUserDialogComponent } from '../create-user-dialog/create-user-dialog.component';
 import { NotificationService } from '../../services/notification.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,8 @@ export class LoginComponent {
     private userService: UserService,
     private router: Router,
     private dialog: MatDialog,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private loaderService: LoaderService
   ) {}
 
 
@@ -42,6 +44,7 @@ export class LoginComponent {
     if (!this.email) return;
 
     try {      
+
       const user = await this.userService.getUserByEmail(this.email);
       if (!user || !user.email) {
         this.notification.error('El usuario no existe!');
