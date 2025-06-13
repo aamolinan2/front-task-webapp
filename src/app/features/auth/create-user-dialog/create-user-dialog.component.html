@@ -2,11 +2,26 @@
   <div class="modal-container">
     <h2>Crear nueva cuenta</h2>
 
-    <input type="email" [(ngModel)]="email" placeholder="Correo electrónico" class="input" />
+    <form #createForm="ngForm" (ngSubmit)="createUser()" novalidate>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        placeholder="Correo electrónico"
+        class="input"
+        required
+        email
+        #emailInput="ngModel"
+      />
 
-    <div class="actions">
-      <button class="btn primary" (click)="createUser()">Crear</button>
-      <button class="btn secondary" (click)="close.emit()">Cancelar</button>
-    </div>
+      <div class="error-message" *ngIf="emailInput.invalid && emailInput.touched">
+        Ingresa un correo electrónico válido.
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" type="submit" [disabled]="createForm.invalid">Crear</button>
+        <button class="btn secondary" type="button" (click)="close.emit()">Cancelar</button>
+      </div>
+    </form>
   </div>
 </div>

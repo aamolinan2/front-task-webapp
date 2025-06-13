@@ -14,9 +14,9 @@ export class AuthService {
     try {
       const res = await this.http.post<any>(`${environment.apiUrl}/users/login`, { email }).toPromise();
       
-      if (res?.token) {
-        localStorage.setItem(this.tokenKey, res.token);
-        localStorage.setItem(this.userSesion, res.email);
+      if (res?.token) {        
+        sessionStorage.setItem(this.tokenKey, res.token);
+        sessionStorage.setItem(this.userSesion, res.email);
         return true;
       }
       return false;
@@ -26,14 +26,20 @@ export class AuthService {
   }
 
   storeToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
+    sessionStorage.setItem(this.tokenKey, token);
   }
 
   getToken() {
-    return localStorage.getItem(this.tokenKey);
+    return sessionStorage.getItem(this.tokenKey);
+  }
+
+  isLoggedIn(): boolean {
+    let isLogged = !!sessionStorage.getItem(this.tokenKey);
+    return isLogged;
   }
 
   logout() {
-    localStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.userSesion);
   }
 }

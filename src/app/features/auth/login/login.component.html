@@ -1,14 +1,22 @@
 <div class="login-container">
   <h2>Iniciar sesión</h2>
-  <form (ngSubmit)="login()">
+  <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
     <input
       type="email"
       placeholder="Correo electrónico"
       [(ngModel)]="email"
       name="email"
+      #emailInput="ngModel"
       required
+      email
     />
-    <button type="submit">Entrar</button>
+
+    <!-- Mensaje de error -->
+    <div class="error-message" *ngIf="emailInput.invalid && emailInput.touched">
+      Ingresa un correo electrónico válido.
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
   </form>
 
   <div class="create-account">

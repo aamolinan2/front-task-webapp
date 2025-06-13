@@ -36,16 +36,18 @@ export class LoginComponent {
     private notification: NotificationService
   ) {}
 
+
+
   async login() {
     if (!this.email) return;
 
     try {      
       const user = await this.userService.getUserByEmail(this.email);
       if (!user || !user.email) {
-        throw new Error('No user data');
+        this.notification.error('El usuario no existe!');
       }
     } catch {
-      alert('Usuario no encontrado.');
+      this.notification.info('No se encontro este usuario.');
       return;
     }
 
@@ -53,7 +55,7 @@ export class LoginComponent {
     if (success) {
       this.router.navigate(['/tasks']);
     } else {
-      alert('Error al iniciar sesión.');
+      this.notification.error('Error al iniciar sesión.');
     }
   }
 
