@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { NotificationService } from '../../services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-user-dialog',
@@ -27,11 +28,16 @@ export class CreateUserDialogComponent {
     }
 
     try {
-      await this.userService.createUser(this.email);
+      let response = await this.userService.createUser(this.email);
+      console.log('response ', response)
       this.notificationService.success('Usuario creado exitosamente');
       this.close.emit();
     } catch (err) {
-      this.notificationService.error('Error al crear el usuario');
+      const message =
+      err instanceof HttpErrorResponse && err.error?.message
+      ? err.error.message
+      : 'Error al crear el usuario.';     
+      this.notificationService.error(message);
     }
   }
 }
