@@ -54,7 +54,8 @@ export class TasksComponent {
   }
 
   addTask() {
-    if (!this.newTask.title?.trim()) return;
+    if (!this.newTask.title?.trim() || !this.isValidText(this.newTask.title)) return;
+    if (this.newTask.description && !this.isValidText(this.newTask.description)) return;
 
     this.taskService.createTask(this.newTask).subscribe(() => {
       this.loadTasks();
@@ -68,7 +69,8 @@ export class TasksComponent {
   }
 
   updateTask() {
-    if (!this.editingTaskId || !this.newTask.title?.trim()) return;
+    if (!this.editingTaskId || !this.newTask.title?.trim() || !this.isValidText(this.newTask.title)) return;
+    if (this.newTask.description && !this.isValidText(this.newTask.description)) return;
 
     this.taskService.updateTask(this.editingTaskId, this.newTask).subscribe(() => {
       this.loadTasks();
@@ -84,4 +86,10 @@ export class TasksComponent {
     this.editingTaskId = null;
     this.newTask = { title: '', description: '' };
   }
+
+  private isValidText(text: string): boolean {
+    const pattern = /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ.,:;()¡!¿?"'%-]*$/;
+    return pattern.test(text) && !/<script.*?>.*?<\/script>/gi.test(text);
+  }
+
 }
